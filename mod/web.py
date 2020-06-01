@@ -14,7 +14,7 @@ def dirb(http_hosts, hosts):
     dirbfile = hosts + "_dirb_scan.txt"
 
     print(m.bcolors.GREEN + "\n\t[*]" + m.bcolors.ENDC + "\tDoing a dirb scan on --- " + http_hosts)
-    dirb = "dirb " + http_hosts +" ./src/medium.txt -o ./ScanningResults/" + dirbfile + " -S"
+    dirb = "dirb " + http_hosts +" ./src/small.txt -o ./ScanningResults/" + dirbfile + " -S"
     subprocess.call(dirb, shell=True)
 
 def nikto(hosts):
@@ -23,7 +23,7 @@ def nikto(hosts):
     niktofile = hosts + "_nikto_scan.html"
 
     print(m.bcolors.GREEN + "\n\t[*]" + m.bcolors.ENDC + "\tDoing a Nikto scan on --- " + hosts)
-    nikto = "nikto -host " + hosts + " -output " + niktofile
+    nikto = "nikto -host " + hosts + " -output ./ScanningResults/" + niktofile
     subprocess.call(nikto, shell=True)
 
 
