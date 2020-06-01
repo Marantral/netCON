@@ -19,7 +19,7 @@ web = spec3.loader.load_module()
 def xmlconsole(xip):
 
 
-    sedcmd = "sed -n \'/<host /,/<\\/host>/p;/<\\/host>/q\' " + "./ScanningResults/" + project + "/XMLout/" + xip + "_full_scan.xml >>./ScanningResults/" + project + "/XMLout/" + "full.xml"
+    sedcmd = r"sed -n '/<host /,/<\/host>/p;/<\/host>/q' " + "./ScanningResults/" + project + "/XMLout/" + xip + "_full_scan.xml >>./ScanningResults/" + project + "/XMLout/" + "full.xml"
     subprocess.call(sedcmd, shell=True)
 
 
