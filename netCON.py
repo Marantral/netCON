@@ -203,7 +203,7 @@ def main():
 
     non_ssl = "egrep \'http\' ./ScanningResults/" + project + r"/TXTout/*_full_scan.txt -r | grep 'open' | grep -v 'ssl' | cut -d '/' -f 5 | sed \'s/_full_scan.txt//'| sed 's/^/https:\/\//' >>" + projectfolder + "httphosts.txt"
     ssl = "egrep 'http' ./ScanningResults/" + project + r"/TXTout/*_full_scan.txt -r | grep 'open' | grep  'ssl' | cut -d '/' -f 5 | sed 's/_full_scan.txt//'| sed 's/^/https:\/\//' >>" + projectfolder + "httphosts.txt"
-    ipport = "cat " +projectfolder + "httphosts.txt | cut -d '/' -f 3 >" + projectfolder +"http_ports_ips.txt"
+    ipport = "cat ./ScanningResults/" + project + "/httphosts.txt | cut -d '/' -f 3 >" + projectfolder +"http_ports_ips.txt"
     subprocess.call(non_ssl, shell=True)
     subprocess.call(ssl, shell=True)
     subprocess.call(ipport, shell=True)
