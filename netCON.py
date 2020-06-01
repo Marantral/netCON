@@ -16,12 +16,6 @@ scan = spec2.loader.load_module()
 spec3 = importlib.util.find_spec('.web', package='mod')
 web = spec3.loader.load_module()
 
-def xmlconsole(xip):
-
-
-    sedcmd = r"sed -n '/<host /,/<\/host>/p;/<\/host>/q' " + "./ScanningResults/" + project + "/XMLout/" + xip + "_full_scan.xml >>./ScanningResults/" + project + "/XMLout/" + "full.xml"
-    subprocess.call(sedcmd, shell=True)
-
 
 def main():
     global project
@@ -164,25 +158,21 @@ def main():
     <verbose />
     <debugging />
     """
-    full_xml = open(xmlfolder + "full.xml", "w")
+    full_xml = open(projectfolder + "full.xml", "w")
     full_xml.write(fullxml)
     full_xml.close()
-
-    xip = []
-    for f in hosts:
-        currentPlace = f[:-1]
-        xip.append(currentPlace)
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
-        executor.map(xmlconsole, xip)
+    files = os.listdir(xmlfolder)
+    for f in files:
+        sedcmd = r"sed -n '/<host /,/<\/host>/p;/<\/host>/q' " + "./ScanningResults/" + project + "/XMLout/" + f + " >>./ScanningResults/" + project + "/full.xml"
+        subprocess.call(sedcmd, shell=True)
 
     exml1 = "'<runstats><finished/><hosts/>'"
     exml2 = "'</runstats>'"
     exml3 = "'</nmaprun>'"
 
-    xmlcmd1 = "echo " + exml1 + " >>" + xmlfolder + "full.xml"
-    xmlcmd2 = "echo " + exml2 + " >>" + xmlfolder + "full.xml"
-    xmlcmd3 = "echo " + exml3 + " >>" + xmlfolder + "full.xml"
+    xmlcmd1 = "echo " + exml1 + " >>" + projectfolder + "full.xml"
+    xmlcmd2 = "echo " + exml2 + " >>" + projectfolder + "full.xml"
+    xmlcmd3 = "echo " + exml3 + " >>" + projectfolder + "full.xml"
 
     subprocess.call(xmlcmd1, shell=True)
     subprocess.call(xmlcmd2, shell=True)
@@ -197,7 +187,7 @@ def main():
         print(m.bcolors.BOLD+ m.bcolors.ERROR +'\n\tSMB Signing is Disabled in this environment.'+ m.bcolors.ENDC +'I would try some SMB Relaying\n\tEdit the responder.conf file and disable SMB and HTTP.\n\tIn responder tools there is MultiRelay!\n\tissue: "./MultiRelay.py -t X.X.X.X -u ALL" After you start responder')
         input("\n\n\tThese are the hosts that have Signing Disabled!\n\t" + projectfolder + "smbSigning.txt\n\n\t Press Enter to keep going!")
 
-    htmlcreate = "xsltproc " + xmlfolder + "full.xml -o " + projectfolder + "NMAP_Results.html"
+    htmlcreate = "xsltproc " + projectfolder + "full.xml -o " + projectfolder + "NMAP_Results.html"
     subprocess.call(htmlcreate, shell=True)
     print("\n\tNMAP HTML Created!  It is located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "NMAP_Results.html" + m.bcolors.ENDC)
     input("\n\tPress Enter to Keep going!!")
