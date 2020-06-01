@@ -96,15 +96,15 @@ def main():
     projectfolder = m.targetfolder + project + "/"
     file1= "null"
     tree1 = input(
-        "\n\n\tDo you have a networks file?(" + m.bcolors.BOLD + m.bcolors.ERROR + "Yes " + m.bcolors.ENDC + "or No): ") or "Yes"
+        "\n\n\tDo you have a networks file?(" + m.bcolors.BOLD + m.bcolors.ERROR + "Yes " + m.bcolors.ENDC + "or No):  ") or "Yes"
     if tree1 == 'Yes':
-        file1 = input("\n\tWhere is the file located?")
+        file1 = input("\n\tWhere is the file located?:  ")
     elif tree1 == 'yes':
-        file1 = input("\n\tWhere is the file located?")
+        file1 = input("\n\tWhere is the file located?:  ")
     elif tree1 == 'y':
-        file1 = input("\n\tWhere is the file located?")
+        file1 = input("\n\tWhere is the file located?:  ")
     elif tree1 == 'YES':
-        file1 = input("\n\tWhere is the file located?")
+        file1 = input("\n\tWhere is the file located?:  ")
     elif tree1 == 'no':
         print(
             "\n\tPut in the networks that you want to scan in slash notation, single IP or a range of IPs. \n\tLike: "
@@ -167,6 +167,7 @@ def main():
     full_xml = open(xmlfolder + "full.xml", "w")
     full_xml.write(fullxml)
     full_xml.close()
+
     xip = []
     for f in hosts:
         currentPlace = f[:-1]
