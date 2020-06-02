@@ -2,7 +2,7 @@
 
 ## File That has all of the common services
 
-import time
+
 import atexit
 import readline
 import os
@@ -10,7 +10,6 @@ import nmap
 
 
 nmap_scan = nmap.PortScanner()
-
 
 
 histfile = os.path.join(os.path.expanduser("~"), ".netCON_history")
@@ -42,5 +41,5 @@ class bcolors:
 
 #Install location
 loc = os.getcwd()
-#Malware output file
+#Results output file
 targetfolder = loc + "/ScanningResults/"

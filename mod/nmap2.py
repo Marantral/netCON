@@ -4,13 +4,8 @@ from importlib import util
 import os
 import subprocess
 
-
 spec = importlib.util.find_spec('.subserv', package='lib')
 m = spec.loader.load_module()
-
-
-
-
 
 def basic(ip):
 
@@ -59,12 +54,12 @@ def nmap(hosts):
             m.bcolors.ERROR + "\t*******************************************************************" + m.bcolors.ENDC)
 
     print(m.bcolors.BLUE + "\t*******************************************************************" + m.bcolors.ENDC)
-    input("\nLets Enumerate this fool!!\nPRESS ENTER TO START!!")
+    input("\a\nLets Enumerate this fool!!\nPRESS ENTER TO START!!")
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
         executor.map(basic, ip)
         executor.map(full, ip)
         executor.map(udp, ip)
-    input("\n\t\tNMAP is DONE. Great Job Bro!\n\t\tPRESS ENTER TO KEEP THIS TRAIN MOVING!!")
+    input("\a\n\t\tNMAP is DONE. Great Job Bro!\n\t\tPRESS ENTER TO KEEP THIS TRAIN MOVING!!")
     os.system("reset")
     os.system("clear")

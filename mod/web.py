@@ -14,7 +14,7 @@ def dirb(http_hosts, hosts):
     dirbfile = hosts + "_dirb_scan.txt"
 
     print(m.bcolors.GREEN + "\n\t[*]" + m.bcolors.ENDC + "\tDoing a dirb scan on --- " + http_hosts)
-    dirb = "dirb " + http_hosts +" ./src/small.txt -o ./ScanningResults/" + dirbfile + " -S"
+    dirb = "dirb " + http_hosts +" -o ./ScanningResults/" + dirbfile + " -S"
     subprocess.call(dirb, shell=True)
 
 def nikto(hosts):
@@ -25,7 +25,6 @@ def nikto(hosts):
     print(m.bcolors.GREEN + "\n\t[*]" + m.bcolors.ENDC + "\tDoing a Nikto scan on --- " + hosts)
     nikto = "nikto -host " + hosts + " -output ./ScanningResults/" + niktofile
     subprocess.call(nikto, shell=True)
-
 
 
 def web(http, ph_http):
@@ -53,12 +52,12 @@ def web(http, ph_http):
             m.bcolors.ERROR + "\t*******************************************************************" + m.bcolors.ENDC)
 
     print(m.bcolors.BLUE + "\t*******************************************************************" + m.bcolors.ENDC)
-    input("\nLets Enumerate all web pages!!\nPRESS ENTER TO START!!")
+    input("\a\nLets Enumerate all web pages!!\a\nPRESS ENTER TO START!!")
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
         executor.map(dirb, http_hosts, hosts)
         executor.map(nikto, hosts)
 
-    input("\n\t\tWeb Enumeration is DONE. Great Job Bro!\n\t\tPRESS ENTER TO KEEP THIS TRAIN MOVING!!")
+    input("\a\n\t\tWeb Enumeration is DONE. Great Job Bro!\n\t\tPRESS ENTER TO KEEP THIS TRAIN MOVING!!")
     os.system("reset")
     os.system("clear")
