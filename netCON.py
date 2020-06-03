@@ -236,6 +236,12 @@ def main():
     htmlcreate = "xsltproc " + projectfolder + "full.xml -o " + projectfolder + "NMAP_Results.html"
     subprocess.call(htmlcreate, shell=True)
     print("\n\tNMAP HTML Created!  It is located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "NMAP_Results.html" + m.bcolors.ENDC)
+
+    product = "xmllint " + projectfolder +"full.xml --xpath \'//nmaprun/host/ports/port/service/@*\' | grep \'product\\|version\'  | uniq >" + projectfolder + "project_products.txt"
+    subprocess.call(product, shell=True)
+    print(
+        "\n\tAll software products and versions identifed in the environment.\n\tI would look for valid exploits per product.\n\tThey are located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "project_products.txt" + m.bcolors.ENDC)
+
     input("\a\n\tPress Enter to Keep going!!")
 
     non_ssl = "egrep \'http\' ./ScanningResults/" + project + r"/TXTout/*_full_scan.txt -r | grep 'open' | grep -v 'ssl' | cut -d '/' -f 5 | sed \'s/_full_scan.txt//'| sed 's/^/https:\/\//' >>" + projectfolder + "httphosts.txt"
