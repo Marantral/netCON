@@ -237,10 +237,10 @@ def main():
     subprocess.call(htmlcreate, shell=True)
     print("\n\tNMAP HTML Created!  It is located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "NMAP_Results.html" + m.bcolors.ENDC)
 
-    product = "xmllint " + projectfolder +"full.xml --xpath \'//nmaprun/host/ports/port/service/@*\' | grep \'product\\|version\'  | uniq >" + projectfolder + "project_products.txt"
+    product = "xmllint " + projectfolder +"full.xml --xpath \'//nmaprun/host/ports/port/service/@*\' | grep \'product\\|version\'  | uniq >" + projectfolder + project + "_products.txt"
     subprocess.call(product, shell=True)
     print(
-        "\n\tAll software products and versions identifed in the environment.\n\tI would look for valid exploits per product.\n\tThey are located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "project_products.txt" + m.bcolors.ENDC)
+        "\n\tAll software products and versions identifed in the environment.\n\tI would look for valid exploits per product.\n\tThey are located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + project + "_products.txt" + m.bcolors.ENDC)
 
     input("\a\n\tPress Enter to Keep going!!")
 
