@@ -55,8 +55,8 @@ def web(http, ph_http):
     input("\a\nLets Enumerate all web pages!!\a\nPRESS ENTER TO START!!")
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
-        executor.map(dirb, http_hosts, hosts, timeout=600)
-        executor.map(nikto, hosts)
+        executor.map(dirb, http_hosts, hosts, timeout=480)
+        executor.map(nikto, hosts, timeout=480)
 
     input("\a\n\t\tWeb Enumeration is DONE. Great Job Bro!\n\t\tPRESS ENTER TO KEEP THIS TRAIN MOVING!!")
     os.system("reset")
