@@ -6,10 +6,9 @@
 import atexit
 import readline
 import os
-import nmap
 
 
-nmap_scan = nmap.PortScanner()
+
 
 
 histfile = os.path.join(os.path.expanduser("~"), ".netCON_history")
