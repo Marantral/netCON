@@ -54,7 +54,7 @@ def main():
 
 
     print("\n\n\tThanks for using this tool. First things first all files and reports will be stored in " + m.targetfolder)
-    project = input("\n\tWhat is the name of this project?: ")
+    project = input("\n\tWhat is the name of this project?: ").strip()
     projectfolder = m.targetfolder + project + "/"
     xmlfolder: object = projectfolder + "XMLout/"
     txtfolder = projectfolder + "TXTout/"
@@ -148,13 +148,13 @@ def main():
         exit()
 
     if file1 != "null":
-        nmapa = "nmap -sn -T4 -oG ./ScanningResults/" + project + ".ping_scan.txt -iL " + file1 + " >" + "./ScanningResults/" + project +"/.1"
+        nmap_args_file = "-sn -T4 -oG " + projectfolder + ".ping_scan.txt -iL " + file1
         print("\n\n\tScanning for Up hosts!")
-        subprocess.call(nmapa, shell=True)
+        m.nmap_scan.scan(arguments=nmap_args_file)
     elif net1 != "":
-        nmapa = "nmap -sn -T4 -oG ./ScanningResults/" + project + "/.ping_scan.txt " + net1 + " >" + "./ScanningResults/" + project +"/.1"
+        nmap_args = "-sn -T4 -oG " + projectfolder + ".ping_scan.txt"
         print("\n\n\tScanning for Up hosts!")
-        subprocess.call(nmapa, shell=True)
+        m.nmap_scan.scan(hosts=net1, arguments=nmap_args)
     else:
         print(
             m.bcolors.ERROR + "\a\n\t\tI Don't Know how you got here but you did.\a\n\n\t\t       BYE BRO!" + m.bcolors.ENDC)
