@@ -148,13 +148,13 @@ def main():
         exit()
 
     if file1 != "null":
-        nmap_args_file = "-sn -T4 -oG " + projectfolder + ".ping_scan.txt -iL " + file1
+        nmapa = "nmap -sn -T4 -oG ./ScanningResults/" + project + ".ping_scan.txt -iL " + file1 + " >" + "./ScanningResults/" + project +"/.1"
         print("\n\n\tScanning for Up hosts!")
-        m.nmap_scan.scan(arguments=nmap_args_file)
+        subprocess.call(nmapa, shell=True)
     elif net1 != "":
-        nmap_args = "-sn -T4 -oG " + projectfolder + ".ping_scan.txt"
+        nmapa = "nmap -sn -T4 -oG ./ScanningResults/" + project + "/.ping_scan.txt " + net1 + " >" + "./ScanningResults/" + project +"/.1"
         print("\n\n\tScanning for Up hosts!")
-        m.nmap_scan.scan(hosts=net1, arguments=nmap_args)
+        subprocess.call(nmapa, shell=True)
     else:
         print(
             m.bcolors.ERROR + "\a\n\t\tI Don't Know how you got here but you did.\a\n\n\t\t       BYE BRO!" + m.bcolors.ENDC)

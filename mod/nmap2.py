@@ -59,7 +59,25 @@ def nmap(hosts):
     with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
         executor.map(basic, ip)
         executor.map(full, ip)
-        executor.map(udp, ip)
+    print(m.bcolors.BOLD + m.bcolors.ERROR + "\n\tBE CAREFUL! Doing a UDP scan on a large range could take a while!" + m.bcolors.ENDC)
+    choice = input("\a\n\tDo you want to also scan UDP ports?"+ m.bcolors.BOLD + m.bcolors.ERROR + " Yes" + m.bcolors.ENDC + "or No: ") or 'Yes'
+    if choice == 'Yes':
+        with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+            executor.map(udp, ip)
+    elif choice == 'YES':
+        with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+            executor.map(udp, ip)
+    elif choice == 'yes':
+        with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+            executor.map(udp, ip)
+    elif choice == 'y':
+        with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+            executor.map(udp, ip)
+    elif choice == 'Y':
+        with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+            executor.map(udp, ip)
+    else:
+        pass
     input("\a\n\t\tNMAP is DONE. Great Job Bro!\n\t\tPRESS ENTER TO KEEP THIS TRAIN MOVING!!")
     os.system("reset")
     os.system("clear")
