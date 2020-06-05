@@ -159,7 +159,7 @@ def main():
         print(
             m.bcolors.ERROR + "\a\n\t\tI Don't Know how you got here but you did.\a\n\n\t\t       BYE BRO!" + m.bcolors.ENDC)
         exit()
-    uphosts = "cat " + projectfolder + ".ping_scan.txt | grep 'Up' | cut -d ' ' -f 2 >" + projectfolder + project + "-Uphosts.txt"
+    uphosts = "cat " + projectfolder + ".ping_scan.txt | grep 'Up' | cut -d ' ' -f 2 | sort | uniq >" + projectfolder + project + "-Uphosts.txt"
     subprocess.call(uphosts, shell=True)
     print("\n\n\tAll up hosts are in " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + project + "-Uphosts.txt!"+ m.bcolors.ENDC  + "\n\tYou should upload that into a vulnerability scanner.")
 
