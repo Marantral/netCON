@@ -254,7 +254,13 @@ def main():
     http = open(projectfolder + "httphosts.txt", "r")
     ph_http = open(projectfolder + "http_ports_ips.txt", "r")
 
-    web.web(http, ph_http)
+    webfile = open(projectfolder + "httphosts.txt", "r")
+    lines = [i for i in webfile.readlines() if len(i) > 0]
+    if len(lines) <=1:
+        input(m.bcolors.ERROR +"\a\n\t\tThere is only one Web host to scan! Make sure that this is true. Press Enter to Keep going"+ m.bcolors.ENDC)
+        web.web(http, ph_http)
+    else:
+        web.web(http, ph_http)
 
     mvdirb = "mv " + m.targetfolder + "*.txt " + dirbfolder
     mvhtml = "mv " + m.targetfolder + "*.html " + niktofolder
