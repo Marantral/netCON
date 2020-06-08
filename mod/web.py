@@ -59,7 +59,8 @@ def web(http, ph_http):
 
 
     os.system("reset")
-
+    print(
+        m.bcolors.BOLD + m.bcolors.ERROR + "\n\tBE CAREFUL! Doing a Nikto scan on a large range could take a while! It could also hang." + m.bcolors.ENDC)
     choice = input("\a\n\tDo you want to do a Nikto scan of web hosts?"+ m.bcolors.BOLD + m.bcolors.ERROR + " Yes " + m.bcolors.ENDC + "or No: ") or 'Yes'
     if choice == 'Yes':
         with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
@@ -116,7 +117,8 @@ def web1(http, ph_http):
     subprocess.call(dirb, shell=True)
 
     os.system("reset")
-
+    print(
+        m.bcolors.BOLD + m.bcolors.ERROR + "\n\tNikto could increase the time and has been known to hang from time to time." + m.bcolors.ENDC)
     choice = input("\a\n\tDo you want to do a Nikto scan of web hosts?"+ m.bcolors.BOLD + m.bcolors.ERROR + " Yes " + m.bcolors.ENDC + "or No: ").strip() or 'Yes'
     if choice == 'Yes':
         niktofile = hosts + "_nikto_scan.html"
