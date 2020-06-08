@@ -18,6 +18,6 @@ Hope this helps!
 ### VM Must haves
 If you are running this tool from VMware you might have issues with the scanning.
 
-You will need to set your network addapter like the below pictrue. Then reset the network services.
+You will need to set your network addapter like the below picture. Then reset the network services.
 
 ![GitHub Logo](/img/vm_settings.png)
