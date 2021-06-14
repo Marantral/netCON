@@ -21,7 +21,7 @@ def full(ip):
     filexml = ip + "_full_scan.xml"
 
     print(m.bcolors.GREEN + "\n\t[*]" + m.bcolors.ENDC + "\tDoing a full TCP scan on ---" + ip)
-    full = "nmap -oX  ./ScanningResults/" + filexml + " -oN ./ScanningResults/" + filename + " -T4  --max-retries 1 --host-timeout 10m -sC -sS  -A -p- " + ip
+    full = "nmap -Pn -oX  ./ScanningResults/" + filexml + " -oN ./ScanningResults/" + filename + " -T4  --max-retries 1 --host-timeout 10m -sC -sS  -A -p- " + ip
     subprocess.call(full, shell=True)
 def udp(ip):
 
@@ -30,7 +30,7 @@ def udp(ip):
 
 
     print(m.bcolors.GREEN + "\n\t[*]" + m.bcolors.ENDC + "\tDoing a UDP scan on ---" + ip)
-    full = "nmap -oX  ./ScanningResults/" + filexml + " -oN ./ScanningResults/" + filename + " -T4  --max-retries 1 --host-timeout 10m -sU -A --top-ports 200  " + ip
+    full = "nmap -Pn -oX ./ScanningResults/" + filexml + " -oN ./ScanningResults/" + filename + " -T4  --max-retries 1 --host-timeout 10m -sU -A --top-ports 200  " + ip
     subprocess.call(full, shell=True)
 def nmap(hosts):
     ip = []

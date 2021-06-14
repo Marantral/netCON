@@ -7,7 +7,11 @@ import atexit
 import readline
 import os
 import nmap
+import errno
+import pathlib
 
+nofile = "\n\tPut in the networks that you want to scan in slash notation, single IP or a range of IPs. \n\tLike: " \
+         "'192.168.0.0/24 172.16.0.0/20 192.168.1.1 192.168.1.1-10' "
 
 nmap_scan = nmap.PortScanner()
 
@@ -42,3 +46,19 @@ class bcolors:
 loc = os.getcwd()
 #Results output file
 targetfolder = loc + "/ScanningResults/"
+
+def folder_create(folder):
+    try:
+        os.makedirs(folder)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            print("\n\tFolder already exists!!")
+
+def file_ex(file1):
+    file = pathlib.Path(file1)
+    if file.exists():
+        pass
+    else:
+        print(
+            bcolors.ERROR + "\a\n\t\tThere is no file: " + file1 + "\a\n\t\tFigure yourself out!\a\n\n\t\t       BYE BRO!" + bcolors.ENDC)
+        exit()

@@ -1,11 +1,8 @@
 #! /usr/bin/env python3
-import errno
 import subprocess
 import importlib
 from importlib import util
 import os
-import pathlib
-
 
 spec = importlib.util.find_spec('.subserv', package='lib')
 m = spec.loader.load_module()
@@ -15,6 +12,7 @@ scan = spec2.loader.load_module()
 
 spec3 = importlib.util.find_spec('.web', package='mod')
 web = spec3.loader.load_module()
+
 
 def main():
     global project
@@ -53,8 +51,8 @@ def main():
                                   Version 0.1 
 """ + m.bcolors.ENDC)
 
-
-    print("\n\n\tThanks for using this tool. First things first all files and reports will be stored in " + m.targetfolder)
+    print(
+        "\n\n\tThanks for using this tool. First things first all files and reports will be stored in " + m.targetfolder)
     project = input("\n\tWhat is the name of this project?: ").strip()
     projectfolder = m.targetfolder + project + "/"
     xmlfolder: object = projectfolder + "XMLout/"
@@ -62,87 +60,21 @@ def main():
     dirbfolder = projectfolder + "DIRBout/"
     niktofolder = projectfolder + "NIKTOout"
 
-    try:
-        os.makedirs(projectfolder)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            print("\n\tFolder already exists!!")
-    try:
-        os.makedirs(xmlfolder)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            print("\n\tFolder already exists!!")
-    try:
-        os.makedirs(txtfolder)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            print("\n\tFolder already exists!!")
-    try:
-        os.makedirs(dirbfolder)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            print("\n\tFolder already exists!!")
-    try:
-        os.makedirs(niktofolder)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            print("\n\tFolder already exists!!")
-
+    folder_list = [projectfolder, xmlfolder, txtfolder, dirbfolder, niktofolder]
+    for folder in folder_list:
+        m.folder_create(folder)
+    yes = {"yes", "YES", "y", "Yes", "Y", "yES", "YeS", "yEs", "YEs", "yeS", "y35", "Y3s"}
+    no = {"no", "NO", "nO", "n", "N", "No", "N0", "n0"}
     projectfolder = m.targetfolder + project + "/"
-    file1= "null"
+    file1 = "null"
     tree1 = input(
         "\n\n\tDo you have a networks file?(" + m.bcolors.BOLD + m.bcolors.ERROR + "Yes " + m.bcolors.ENDC + "or No):  ") or "Yes"
-    if tree1 == 'Yes':
+    if tree1 in yes:
         file1 = input("\n\tWhere is the file located?:  ")
-        file = pathlib.Path(file1)
-        if file.exists():
-            pass
-        else:
-            print(m.bcolors.ERROR +"\a\n\t\tThere is no file: " + file1 + "\a\n\t\tFigure yourself out!\a\n\n\t\t       BYE BRO!"+ m.bcolors.ENDC)
-            exit()
-    elif tree1 == 'yes':
-        file1 = input("\n\tWhere is the file located?:  ")
-        file = pathlib.Path(file1)
-        if file.exists():
-            pass
-        else:
-            print(m.bcolors.ERROR +"\a\n\t\tThere is no file: " + file1 + "\a\n\t\tFigure yourself out!\a\n\n\t\t       BYE BRO!"+ m.bcolors.ENDC)
-            exit()
-    elif tree1 == 'y':
-        file1 = input("\n\tWhere is the file located?:  ")
-        file = pathlib.Path(file1)
-        if file.exists():
-            pass
-        else:
-            print(m.bcolors.ERROR +"\a\n\t\tThere is no file: " + file1 + "\a\n\t\tFigure yourself out!\a\n\n\t\t       BYE BRO!"+ m.bcolors.ENDC)
-            exit()
-    elif tree1 == 'YES':
-        file1 = input("\n\tWhere is the file located?:  ")
-        file = pathlib.Path(file1)
-        if file.exists():
-            pass
-        else:
-            print(m.bcolors.ERROR +"\a\n\t\tThere is no file: " + file1 + "\a\n\t\tFigure yourself out!\a\n\n\t\t       BYE BRO!"+ m.bcolors.ENDC)
-            exit()
-    elif tree1 == 'no':
-        print(
-            "\n\tPut in the networks that you want to scan in slash notation, single IP or a range of IPs. \n\tLike: "
-            "'192.168.0.0/24 172.16.0.0/20 192.168.1.1 192.168.1.1-10'")
-        net1 = input("\n\tPlease put in the networks that you are wanting to scan!:  ")
-    elif tree1 == 'n':
-        print(
-            "\n\tPut in the networks that you want to scan in slash notation, single IP or a range of IPs. \n\tLike: "
-            "'192.168.0.0/24 172.16.0.0/20 192.168.1.1 192.168.1.1-10'")
-        net1 = input("\n\tPlease put in the networks that you are wanting to scan!:  ")
-    elif tree1 == 'NO':
-        print(
-            "\n\tPut in the networks that you want to scan in slash notation, single IP or a range of IPs. \n\tLike: "
-            "'192.168.0.0/24 172.16.0.0/20 192.168.1.1 192.168.1.1-10'")
-        net1 = input("\n\tPlease put in the networks that you are wanting to scan!:  ")
-    elif tree1 == 'No':
-        print(
-            "\n\tPut in the networks that you want to scan in slash notation, single IP or a range of IPs. \n\tLike: "
-            "'192.168.0.0/24 172.16.0.0/20 192.168.1.1 192.168.1.1-10'")
+        m.file_ex(file1)
+
+    elif tree1 in no:
+        print(m.nofile)
         net1 = input("\n\tPlease put in the networks that you are wanting to scan!:  ")
     else:
         print("\n\tI didn't understand your input! Have a great day")
@@ -162,32 +94,36 @@ def main():
         exit()
     uphosts = "cat " + projectfolder + ".ping_scan.txt | grep 'Up' | cut -d ' ' -f 2 | sort | uniq >" + projectfolder + project + "-Uphosts.txt"
     subprocess.call(uphosts, shell=True)
-    print("\n\n\tAll up hosts are in " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + project + "-Uphosts.txt!"+ m.bcolors.ENDC  + "\n\tYou should upload that into a vulnerability scanner.")
+    print(
+        "\n\n\tAll up hosts are in " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + project + "-Uphosts.txt!" + m.bcolors.ENDC + "\n\tYou should upload that into a vulnerability scanner.")
 
     hosts = open(projectfolder + project + "-Uphosts.txt", "r")
     fileup = open(projectfolder + project + "-Uphosts.txt", "r")
-    lines = [i for i in fileup.readlines() if len(i)>0]
-    if len(lines) >300:
-        print(m.bcolors.ERROR +"\a\n\t\t That is a lot of Hosts!\n\t\tI would make it into smaller chuncks, but do what you want!" + m.bcolors.ENDC)
+    lines = [i for i in fileup.readlines() if len(i) > 0]
+    if len(lines) > 300:
+        print(
+            m.bcolors.ERROR + "\a\n\t\t That is a lot of Hosts!\n\t\tI would make it into smaller chuncks, but do what you want!" + m.bcolors.ENDC)
         choice = input("\a\n\t\tTo continue enter (Y) to stop and rethink enter (N)")
         if choice == 'Y':
             print(
                 m.bcolors.ERROR + "\a\n\t\tOkay!  Here we go?!!? Hope you don't want this in 5 minutes!" + m.bcolors.ENDC)
         elif choice == 'y':
-            print(m.bcolors.ERROR + "\a\n\t\tOkay!  Here we go?!!? Hope you don't want this in 5 minutes!" + m.bcolors.ENDC)
+            print(
+                m.bcolors.ERROR + "\a\n\t\tOkay!  Here we go?!!? Hope you don't want this in 5 minutes!" + m.bcolors.ENDC)
         elif choice == 'N':
-            print(m.bcolors.ERROR +"\a\n\t\tGo and rethink your life choices!!!" + m.bcolors.ENDC)
+            print(m.bcolors.ERROR + "\a\n\t\tGo and rethink your life choices!!!" + m.bcolors.ENDC)
             exit()
         elif choice == 'n':
-            print(m.bcolors.ERROR +"\a\n\t\tGo and rethink your life choices!!!" + m.bcolors.ENDC)
+            print(m.bcolors.ERROR + "\a\n\t\tGo and rethink your life choices!!!" + m.bcolors.ENDC)
             exit()
         else:
-            input(m.bcolors.ERROR +"\a\n\t\tThat was not Y or N so.... Come on!" + m.bcolors.ENDC)
+            input(m.bcolors.ERROR + "\a\n\t\tThat was not Y or N so.... Come on!" + m.bcolors.ENDC)
             exit()
 
     input("\a\n\tPress enter to continue!")
-    if len(lines) <=1:
-        print(m.bcolors.ERROR +"\a\n\t\tThere is only one host!\n\t\tMaybe you should just scan it normally.\n\t\tIts not like you need to process a lot of data.\n\t\tIf you need help with this go ask Google!" + m.bcolors.ENDC)
+    if len(lines) <= 1:
+        print(
+            m.bcolors.ERROR + "\a\n\t\tThere is only one host!\n\t\tMaybe you should just scan it normally.\n\t\tIts not like you need to process a lot of data.\n\t\tIf you need help with this go ask Google!" + m.bcolors.ENDC)
         exit()
     scan.nmap(hosts)
 
@@ -231,14 +167,17 @@ def main():
     if os.stat(projectfolder + "smbSigning.txt").st_size == 0:
         pass
     else:
-        print(m.bcolors.BOLD+ m.bcolors.ERROR +'\n\tSMB Signing is Disabled in this environment.'+ m.bcolors.ENDC +'I would try some SMB Relaying\n\tEdit the responder.conf file and disable SMB and HTTP.\n\tIn responder tools there is MultiRelay!\n\tissue: "./MultiRelay.py -t X.X.X.X -u ALL" After you start responder')
-        input("\n\n\tThese are the hosts that have Signing Disabled!\n\t" + projectfolder + "smbSigning.txt\a\n\n\t Press Enter to keep going!")
+        print(
+            m.bcolors.BOLD + m.bcolors.ERROR + '\n\tSMB Signing is Disabled in this environment.' + m.bcolors.ENDC + 'I would try some SMB Relaying\n\tEdit the responder.conf file and disable SMB and HTTP.\n\tIn responder tools there is MultiRelay!\n\tissue: "./MultiRelay.py -t X.X.X.X -u ALL" After you start responder')
+        input(
+            "\n\n\tThese are the hosts that have Signing Disabled!\n\t" + projectfolder + "smbSigning.txt\a\n\n\t Press Enter to keep going!")
 
     htmlcreate = "xsltproc " + projectfolder + "full.xml -o " + projectfolder + "NMAP_Results.html"
     subprocess.call(htmlcreate, shell=True)
-    print("\n\tNMAP HTML Created!  It is located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "NMAP_Results.html" + m.bcolors.ENDC)
+    print(
+        "\n\tNMAP HTML Created!  It is located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "NMAP_Results.html" + m.bcolors.ENDC)
 
-    product = "xmllint " + projectfolder +"full.xml --xpath \'//nmaprun/host/ports/port/service/@*\' | grep \'product\\|version\'  | uniq >" + projectfolder + project + "_products.txt"
+    product = "xmllint " + projectfolder + "full.xml --xpath \'//nmaprun/host/ports/port/service/@*\' | grep \'product\\|version\'  | uniq >" + projectfolder + project + "_products.txt"
     subprocess.call(product, shell=True)
     print(
         "\n\tAll software products and versions identifed in the environment.\n\tI would look for valid exploits per product.\n\tThey are located in: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + project + "_products.txt" + m.bcolors.ENDC)
@@ -247,7 +186,8 @@ def main():
 
     non_ssl = "egrep \'http\' ./ScanningResults/" + project + r"/TXTout/*_full_scan.txt -r | grep 'open' | grep -v 'ssl' | cut -d '/' -f 5 | sed \'s/_full_scan.txt//'| sed 's/^/https:\/\//' >>" + projectfolder + "httphosts.txt"
     ssl = "egrep 'http' ./ScanningResults/" + project + r"/TXTout/*_full_scan.txt -r | grep 'open' | grep  'ssl' | cut -d '/' -f 5 | sed 's/_full_scan.txt//'| sed 's/^/https:\/\//' >>" + projectfolder + "httphosts.txt"
-    ipport = "cat ./ScanningResults/" + project + "/httphosts.txt | cut -d '/' -f 3 >" + projectfolder +"http_ports_ips.txt"
+
+    ipport = "cat ./ScanningResults/" + project + "/httphosts.txt | cut -d '/' -f 3 >" + projectfolder + "http_ports_ips.txt"
     subprocess.call(non_ssl, shell=True)
     subprocess.call(ssl, shell=True)
     subprocess.call(ipport, shell=True)
@@ -257,8 +197,9 @@ def main():
 
     webfile = open(projectfolder + "httphosts.txt", "r")
     lines = [i for i in webfile.readlines() if len(i) > 0]
-    if len(lines) <=1:
-        input(m.bcolors.ERROR +"\a\n\t\tThere is only one Web host to scan! Make sure that this is true. Press Enter to Keep going"+ m.bcolors.ENDC)
+    if len(lines) <= 1:
+        input(
+            m.bcolors.ERROR + "\a\n\t\tThere is only one Web host to scan! Make sure that this is true. Press Enter to Keep going" + m.bcolors.ENDC)
         web.web(http, ph_http)
     else:
         web.web(http, ph_http)
@@ -271,10 +212,13 @@ def main():
 
     dirbup = "egrep \'\\(CODE:200' ./ScanningResults/" + project + "/DIRBout/ -r |cut -d ' ' -f 2,3 >" + projectfolder + "200_Webpages.txt"
     subprocess.call(dirbup, shell=True)
-    print("\n\n\tAll 200 pages are located within: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "200_Webpages.txt" + m.bcolors.ENDC)
-    print("\n\tThe Nikto Scan results are stored in: " + m.bcolors.BOLD + m.bcolors.ERROR + niktofolder + m.bcolors.ENDC)
+    print(
+        "\n\n\tAll 200 pages are located within: " + m.bcolors.BOLD + m.bcolors.ERROR + projectfolder + "200_Webpages.txt" + m.bcolors.ENDC)
+    print(
+        "\n\tThe Nikto Scan results are stored in: " + m.bcolors.BOLD + m.bcolors.ERROR + niktofolder + m.bcolors.ENDC)
 
     input("\a\n\tPress Enter to Look at your stuff!!\n\tThis is not done being built I will add to it later!")
+
 
 # call main() function
 if __name__ == '__main__':
